@@ -1,0 +1,27 @@
+{Book}
+- title
+- description
+- owner
+- authors
+- tags
+- status [final|open|voting]
+- creationDate
+- timeToWrite
+- timeToVote
+- chapters{Chapter}
+- openChapters{Chapter}
+
+{Chapter}
+- title [optional|obligatory]
+- text [optional|obligatory]
+- img [optional|obligatory]
+- maxLength [optional|obligatory]
+
+{Author} [Login with Twitter or Facebook?]
+- userName
+- password
+- email
+- displayName
+- userImg
+- description
+
