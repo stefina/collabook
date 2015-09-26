@@ -3,13 +3,13 @@ var Router = require('react-router');
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 
-var Layout = require('./components/layout');
+var CollabookApp = require('./components/collabookApp');
 var Home = require('./components/home');
 var Book = require('./components/book');
 var Author = require('./components/author');
 
 var routes = (
-	<Route name="layout" path="/" handler={Layout}>
+	<Route name="layout" path="/" handler={CollabookApp}>
 		<DefaultRoute handler={Home} />
 		<Route path="book" handler={Book} />
 		<Route path="author" handler={Author} />

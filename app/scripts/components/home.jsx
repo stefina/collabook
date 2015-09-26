@@ -6,13 +6,8 @@ var Home = React.createClass({
 
     return (
       <div className="hero-unit">
-        <h1>'Allo, 'Allo!</h1>
-        <p>You now have</p>
+        <h1>Create a book!</h1>
         <ul>
-            <li>ReactJS Reflux Boilerplate</li>
-            <li>Modernizr</li>
-            <li>Sass with Compass</li>
-            <li>Jest</li>
             <li><a href="/#/book">Book</a></li>
             <li><a href="/#/author">Author</a></li>
         </ul>
