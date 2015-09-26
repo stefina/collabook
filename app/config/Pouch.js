@@ -1,4 +1,6 @@
-var PouchDB = require('pouchdb');
-var db = new PouchDB('collabook_db');
+var PouchDB = require('pouchdb'),
+    db = new PouchDB('http://localhost:5984/collabook', {
+      db : require('pouchdb-find')
+    });
 
-module.exports = PouchDB;
+module.exports = db;
