@@ -5,10 +5,10 @@ var Reflux = require('reflux');
 
 var Header = require('./Header'),
     Footer = require('./Footer');
-    bookStore = require('./../stores/BookStore')
+    BookStore = require('./../stores/BookStore')
 
 var CollabookApp = React.createClass({
-  mixins: [Reflux.connect(bookStore,"bookList")],
+  mixins: [Reflux.connect(BookStore,"bookList")],
   getInitialState: function() {
     return {
       bookList: []
@@ -19,7 +19,7 @@ var CollabookApp = React.createClass({
     return (
       <div className="App">
         <Header />
-        <RouteHandler list={this.state.bookList} />
+        <RouteHandler bookList={this.state.bookList} />
         <Footer />
       </div>
     );

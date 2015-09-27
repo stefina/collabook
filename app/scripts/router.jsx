@@ -5,14 +5,14 @@ var DefaultRoute = Router.DefaultRoute;
 
 var CollabookApp = require('./components/collabookApp');
 var Home = require('./components/home');
-var Book = require('./components/book');
+var BookList = require('./components/bookList');
 var Author = require('./components/author');
 
 var routes = (
 	<Route name="layout" path="/" handler={CollabookApp}>
 		<DefaultRoute handler={Home} />
-		<Route path="book" handler={Book} />
-		<Route path="author" handler={Author} />
+		<Route path="books" handler={BookList} />
+		<Route path="authors" handler={Author} />
 	</Route>
 );
 

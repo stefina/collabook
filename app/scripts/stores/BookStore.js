@@ -10,16 +10,16 @@ var defaultData = {
 
 var BookStore = Reflux.createStore({
   listenables: [BookActions],
-  updateList: function(bookList){
-    db.allDocs({
-      include_docs: true
-    }).then(function (result) {
-      this.bookList = bookList;
-      this.trigger(bookList); // sends the updated list to all listening components (TodoApp)
-    }).catch(function(err) {
-      console.log(err);
-    });
-  },
+  // updateList: function(bookList){
+  //   db.allDocs({
+  //     include_docs: true
+  //   }).then(function (result) {
+  //     this.bookList = bookList;
+  //     this.trigger(bookList); // sends the updated list to all listening components (TodoApp)
+  //   }).catch(function(err) {
+  //     console.log(err);
+  //   });
+  // },
   onGetBooks: function() {
     db.allDocs({
       include_docs: true
@@ -30,6 +30,7 @@ var BookStore = Reflux.createStore({
     });
   },
   onCreateDefaultBook: function(){
+    console.log('create default Book');
     db.put({
       _id: new Date().toISOString() + '_' + defaultData.title,
       title: bookData.title,
@@ -58,18 +59,28 @@ var BookStore = Reflux.createStore({
   onRemoveBook: function(bookdId) {
     // remove book by id
   },
+  updateBookList: function(bookList) {
+    BookStore.trigger(bookList);
+  },
 
   init: function() {
-    console.log('BookStore initialized');
-    db.put({
-      _id: new Date().toISOString() + '_' + defaultData.title,
-      title: defaultData.title,
-      description: defaultData.description,
-    }).then(function (response) {
-      // getAllBooks(); // ???
-    }).catch(function (err) {
+    db.allDocs({
+      include_docs: true
+    }).then(function (result) {
+      BookStore.updateBookList(result.rows);
+    }).catch(function(err) {
       console.log(err);
     });
+    console.log('BookStore initialized');
+    // db.put({
+    //   _id: new Date().toISOString() + '_' + defaultData.title,
+    //   title: defaultData.title,
+    //   description: defaultData.description,
+    // }).then(function (response) {
+    //   // getAllBooks(); // ???
+    // }).catch(function (err) {
+    //   console.log(err);
+    // });
   }
 });
 
@@ -79,6 +90,7 @@ var getAllBooks = function() {
   }).then(function (result) {
     this.bookList = result;
     this.trigger(this.bookList);
+    console.log('booklist triggered');
   }).catch(function(err) {
     console.log(err);
   });

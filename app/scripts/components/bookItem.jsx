@@ -1,19 +1,25 @@
-var React = require('react');
+var React = require('react/addons');
 
 var BookItem = React.createClass({
   propTypes: {
-    isComplete: React.PropTypes.bool.isRequired,
-    id: React.PropTypes.number
+    id: React.PropTypes.string,
+    key: React.PropTypes.string,
+    title: React.PropTypes.string,
+    description: React.PropTypes.string
   },
+  // mixins: [React.addons.LinkedStateMixin],
 
   render: function() {
+    var id = this.props._id;
+    var key = this.props._rev;
+    var title = this.props.title;
+    var description = this.props.description;
 
     return (
       <li>
-          <div>
-            <input ref="editInput" className="edit" valueLink={this.linkState('editValue')} onKeyUp={this.handleValueChange} />
-          </div>
-          <input id="new-book" placeholder="What is the title of your book?" autoFocus onKeyUp={this.handleValueChange}/>
+          <div>{title}</div>
+          <div>{description}</div>
+          {/*<input ref="editInput" className="edit" valueLink={this.linkState('editValue')} onKeyUp={this.handleValueChange} /> */}
       </li>
     );
   }

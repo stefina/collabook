@@ -8,8 +8,8 @@ var Home = React.createClass({
       <div className="hero-unit">
         <h1>Create a book!</h1>
         <ul>
-            <li><a href="/#/book">Book</a></li>
-            <li><a href="/#/author">Author</a></li>
+            <li><a href="/#/books">Books</a></li>
+            <li><a href="/#/authors">Authors</a></li>
         </ul>
       </div>
     );
