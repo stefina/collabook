@@ -7,7 +7,7 @@ var BookItem = React.createClass({
     title: React.PropTypes.string,
     description: React.PropTypes.string
   },
-  // mixins: [React.addons.LinkedStateMixin],
+  mixins: [React.addons.LinkedStateMixin],
 
   render: function() {
     var id = this.props._id;

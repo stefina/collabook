@@ -1,6 +1,6 @@
 var Reflux = require('reflux');
 
-var BookActions = require('./../actions/bookActions');
+var BookActions = require('./../actions/BookActions');
 var db = require('./../../config/Pouch');
 
 var defaultData = {
@@ -30,11 +30,9 @@ var BookStore = Reflux.createStore({
     });
   },
   onCreateDefaultBook: function(){
-    console.log('create default Book');
-    db.put({
-      _id: new Date().toISOString() + '_' + defaultData.title,
-      title: bookData.title,
-      description: bookData.description,
+    db.post({
+      title: defaultData.title,
+      description: defaultData.description,
     }).then(function (response) {
       this.bookList = getAllBooks(); // ???
     }).catch(function (err) {
@@ -46,8 +44,7 @@ var BookStore = Reflux.createStore({
     // update book with bookData
   },
   onAddBook: function(bookData){
-    db.put({
-      _id: new Date().toISOString() + '_' + bookData.title,
+    db.post({
       title: bookData.title,
       description: bookData.description,
     }).then(function (response) {
@@ -59,15 +56,27 @@ var BookStore = Reflux.createStore({
   onRemoveBook: function(bookdId) {
     // remove book by id
   },
+  onUpdateBooks: function(bookDoc) {
+    var bookList = this.bookList;
+    bookList.push(bookDoc);
+    BookStore.updateBookList(bookList);
+  },
   updateBookList: function(bookList) {
+    this.bookList = bookList;
     BookStore.trigger(bookList);
+    console.log("trigger updated BookList");
   },
 
   init: function() {
+    this.bookList = new Array();
     db.allDocs({
       include_docs: true
     }).then(function (result) {
-      BookStore.updateBookList(result.rows);
+      var bookList = new Array();
+      result.rows.forEach(function(row) {
+        bookList.push(row.doc);
+      });
+      BookStore.updateBookList(bookList);
     }).catch(function(err) {
       console.log(err);
     });
