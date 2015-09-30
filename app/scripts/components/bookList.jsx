@@ -4,7 +4,8 @@ var React = require('react'),
 
 var BookStore = require('./../stores/BookStore'),
     BookActions = require('./../actions/BookActions'),
-    BookItem = require('./BookItem');
+    BookItem = require('./BookItem'),
+    BookForm = require('./BookForm');
 
 var BookList = React.createClass({
   // mixins: [ 
@@ -13,16 +14,6 @@ var BookList = React.createClass({
   // ],
   propTypes: {
       bookList: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  },
-  handleValueChange: function(evt) {
-    var text = evt.target.value;
-    if (evt.which === 13 && text) {
-      var bookData = { 
-        title : text,
-        description : "default description"
-      }
-      BookActions.addBook(bookData);
-    }
   },
 
   render: function() {
@@ -36,8 +27,7 @@ var BookList = React.createClass({
             return <BookItem title={book.title} id={book._id} key={book._rev} description={book.description}/>;
         })}
       </ul>
-      Create a new book-title:
-      <input id="bookTitle" onKeyUp={this.handleValueChange} />
+      <BookForm />
     </div>
     );
   }
