@@ -20,7 +20,7 @@ var CollabookApp = React.createClass({
       <div className="App">
         <Header />
         <RouteHandler bookList={this.state.bookList} />
-        <Footer />
+        <Footer bookCount={this.state.bookList.length} />
       </div>
     );
   }

@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react/addons'),
+    BookActions = require('./../actions/BookActions');
 
 var BookItem = React.createClass({
   propTypes: {
@@ -9,6 +10,10 @@ var BookItem = React.createClass({
   },
   mixins: [React.addons.LinkedStateMixin],
 
+  handleDelete: function() {
+    
+    BookActions.removeBook(this.props.id);
+  },
   render: function() {
     var id = this.props._id;
     var key = this.props._rev;
@@ -19,6 +24,7 @@ var BookItem = React.createClass({
       <li>
           <div>{title}</div>
           <div>{description}</div>
+          <button id="deleteBook" onClick={this.handleDelete}> X {title}</button>
           {/*<input ref="editInput" className="edit" valueLink={this.linkState('editValue')} onKeyUp={this.handleValueChange} /> */}
       </li>
     );

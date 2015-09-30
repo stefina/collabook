@@ -10,16 +10,6 @@ var defaultData = {
 
 var BookStore = Reflux.createStore({
   listenables: [BookActions],
-  // updateList: function(bookList){
-  //   db.allDocs({
-  //     include_docs: true
-  //   }).then(function (result) {
-  //     this.bookList = bookList;
-  //     this.trigger(bookList); // sends the updated list to all listening components (TodoApp)
-  //   }).catch(function(err) {
-  //     console.log(err);
-  //   });
-  // },
   onGetBooks: function() {
     db.allDocs({
       include_docs: true
@@ -34,7 +24,8 @@ var BookStore = Reflux.createStore({
       title: defaultData.title,
       description: defaultData.description,
     }).then(function (response) {
-      this.bookList = getAllBooks(); // ???
+      // this.bookList = getAllBooks(); // ???
+      BookStore.updateBookList();
     }).catch(function (err) {
       console.log(err);
     });
@@ -48,23 +39,32 @@ var BookStore = Reflux.createStore({
       title: bookData.title,
       description: bookData.description,
     }).then(function (response) {
-      console.log('saved this book: ' + response);
+      BookStore.updateBookList();
     }).catch(function (err) {
       console.log(err);
     });
   },
-  onRemoveBook: function(bookdId) {
-    // remove book by id
+  onRemoveBook: function(bookId) {
+    db.get(bookId).then(function(doc) {
+      return db.remove(doc);
+    }).then(function (result) {
+      BookStore.updateBookList();
+    }).catch(function (err) {
+      console.log(err);
+    });
   },
-  onUpdateBooks: function(bookDoc) {
-    var bookList = this.bookList;
-    bookList.push(bookDoc);
-    BookStore.updateBookList(bookList);
+  onUpdateBook: function(bookDoc) {
+    // BookStore.updateBook();
   },
-  updateBookList: function(bookList) {
-    this.bookList = bookList;
-    BookStore.trigger(bookList);
-    console.log("trigger updated BookList");
+  updateBookList: function() {
+    db.allDocs({
+      include_docs: true
+    }).then(function (result) {
+      var bookList = createBookListFromResult(result);
+      BookStore.trigger(bookList);
+    }).catch(function(err) {
+      console.log(err);
+    });
   },
 
   init: function() {
@@ -72,37 +72,30 @@ var BookStore = Reflux.createStore({
     db.allDocs({
       include_docs: true
     }).then(function (result) {
-      var bookList = new Array();
-      result.rows.forEach(function(row) {
-        bookList.push(row.doc);
-      });
-      BookStore.updateBookList(bookList);
+      var bookList = createBookListFromResult(result);
+      BookStore.trigger(bookList);
     }).catch(function(err) {
       console.log(err);
     });
     console.log('BookStore initialized');
-    // db.put({
-    //   _id: new Date().toISOString() + '_' + defaultData.title,
-    //   title: defaultData.title,
-    //   description: defaultData.description,
-    // }).then(function (response) {
-    //   // getAllBooks(); // ???
-    // }).catch(function (err) {
-    //   console.log(err);
-    // });
   }
 });
 
-var getAllBooks = function() {
-  db.allDocs({
-    include_docs: true
-  }).then(function (result) {
-    this.bookList = result;
-    this.trigger(this.bookList);
-    console.log('booklist triggered');
-  }).catch(function(err) {
-    console.log(err);
+var createBookListFromResult = function(result){ 
+  var bookList = new Array();
+  result.rows.forEach(function(row) {
+    bookList.push(row.doc);
   });
+  return bookList;
+}
+
+var createBookObj = function(bookData, response){
+  var book = new Object();
+  book._id = response.id;
+  book._rev = response.rev;
+  book.title = bookData.title;
+  book.description = bookData.description;
+  return book;
 }
 
 

@@ -14,13 +14,14 @@
     "pouchdb-find": "^0.3.5",
     "react": "~0.13.1",
     "react-router": "~0.13.2",
-    "reflux": "~0.2.7"
+    "reflux": "~0.2.7",
+    "sugar": "^1.4.1"
   },
   "devDependencies": {
     "browserify": "~9.0.7",
     "del": "~1.1.1",
     "domain": "~0.0.1",
-    "gulp": "~3.8.11",
+    "gulp": "~3.9.0",
     "gulp-autoprefixer": "~2.1.0",
     "gulp-cached": "~1.0.4",
     "gulp-compass": "~2.0.4",

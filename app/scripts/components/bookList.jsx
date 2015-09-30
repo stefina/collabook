@@ -16,8 +16,6 @@ var BookList = React.createClass({
   },
   handleValueChange: function(evt) {
     var text = evt.target.value;
-    // this.state.editValue; // because of the linkState call in render, this is the contents of the field
-    // we pressed enter, if text isn't empty we blur the field which will cause a save
     if (evt.which === 13 && text) {
       var bookData = { 
         title : text,
@@ -38,6 +36,7 @@ var BookList = React.createClass({
             return <BookItem title={book.title} id={book._id} key={book._rev} description={book.description}/>;
         })}
       </ul>
+      Create a new book-title:
       <input id="bookTitle" onKeyUp={this.handleValueChange} />
     </div>
     );

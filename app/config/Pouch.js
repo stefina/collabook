@@ -13,9 +13,6 @@ localDB.sync(remoteDB, {
   console.log("yay, we're in sync!");
 }).on('change', function (change) {
   console.log("yo, something changed!");
-  if(change && change.direction && change.direction === "push"){
-    BookActions.updateBooks(change.change.docs[0]);  
-  }
 }).on('paused', function (info) {
   console.log("replication was paused, usually because of a lost connection");
 }).on('active', function (info) {
