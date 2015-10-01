@@ -8,10 +8,6 @@ var BookStore = require('./../stores/BookStore'),
     BookForm = require('./BookForm');
 
 var BookList = React.createClass({
-  // mixins: [ 
-  //   // ReactRouter.State, 
-  //   Reflux.connect(BookStore,"bookList") 
-  // ],
   propTypes: {
       bookList: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   },

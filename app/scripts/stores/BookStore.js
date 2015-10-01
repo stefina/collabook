@@ -24,7 +24,6 @@ var BookStore = Reflux.createStore({
       title: defaultData.title,
       description: defaultData.description,
     }).then(function (response) {
-      // this.bookList = getAllBooks(); // ???
       BookStore.updateBookList();
     }).catch(function (err) {
       console.log(err);
@@ -33,6 +32,7 @@ var BookStore = Reflux.createStore({
   onEditBook: function(bookId, bookData) {
     // fetch book by id
     // update book with bookData
+    // BookStore.updateBook(); <- trigger book
   },
   onAddBook: function(bookData){
     db.post({
@@ -52,9 +52,6 @@ var BookStore = Reflux.createStore({
     }).catch(function (err) {
       console.log(err);
     });
-  },
-  onUpdateBook: function(bookDoc) {
-    // BookStore.updateBook();
   },
   updateBookList: function() {
     db.allDocs({

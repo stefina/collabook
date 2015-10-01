@@ -15,7 +15,7 @@ var BookForm = React.createClass({
   renderTextInput: function(id, label) {
     return this.renderField(id, label,
       <input type="text" className="form-control" id={id} ref={id}/>
-    )
+    );
   }, 
   renderField: function(id, label, field) {
     return (
@@ -27,6 +27,11 @@ var BookForm = React.createClass({
       </div>
     );
   },
+  renderTextArea: function(id, label) {
+    return this.renderField(id, label,
+      <textarea id={id} ref={id} />
+    );
+  },
 
   render: function() {
 
@@ -34,7 +39,7 @@ var BookForm = React.createClass({
       <div>
         <h3>Create a new book-title:</h3>
         {this.renderTextInput('bookTitle', 'title of your book')}
-        {this.renderTextInput('bookDescription', 'describe what the book will be about')}
+        {this.renderTextArea('bookDescription', 'describe what the book will be about')}
         <button type="button" onClick={this.handleSubmit}>Submit</button>
       </div>
     );

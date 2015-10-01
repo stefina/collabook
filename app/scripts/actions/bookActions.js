@@ -5,8 +5,7 @@ var BookActions = Reflux.createActions([
     "removeBook",
     "editBook",
     "getBooks",
-    "createDefaultBook",
-    "updateBook"
+    "createDefaultBook"
 ]);
 
 module.exports = BookActions;
