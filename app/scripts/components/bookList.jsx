@@ -9,7 +9,7 @@ var BookStore = require('./../stores/BookStore'),
 
 var BookList = React.createClass({
   propTypes: {
-      bookList: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    bookList: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   },
 
   render: function() {
@@ -18,7 +18,7 @@ var BookList = React.createClass({
     return (
     <div>
       <h1>Create a book!</h1>
-      <ul id="todo-list">
+      <ul id="book-list">
         {bookList.map(function(book){
             return <BookItem title={book.title} id={book._id} key={book._rev} description={book.description}/>;
         })}

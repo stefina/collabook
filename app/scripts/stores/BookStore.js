@@ -30,9 +30,18 @@ var BookStore = Reflux.createStore({
     });
   },
   onEditBook: function(bookId, bookData) {
-    // fetch book by id
-    // update book with bookData
-    // BookStore.updateBook(); <- trigger book
+    db.get(bookId).then(function(doc) {
+      return db.put({
+        _id: bookId,
+        _rev: doc._rev,
+        title: bookData.title,
+        description: bookData.description
+      });
+    }).then(function (result) {
+      BookStore.updateBookList();
+    }).catch(function (err) {
+      console.log(err);
+    });
   },
   onAddBook: function(bookData){
     db.post({
@@ -53,6 +62,12 @@ var BookStore = Reflux.createStore({
       console.log(err);
     });
   },
+  // onAddChapter: function(bookId, chapter) {
+  //   db.get(bookId).then(function(doc) {
+
+  //   });
+
+  // },
   updateBookList: function() {
     db.allDocs({
       include_docs: true
